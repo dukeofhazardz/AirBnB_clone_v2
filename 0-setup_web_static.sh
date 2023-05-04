@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # A bash script that sets up a web server for deployment of web_static.
 
-sudo apt-get update -y
-sudo apt-get nginx -y
+sudo apt-get -y update
+sudo apt-get -y nginx
 
 sudo mkdir -p /data/
 sudo mkdir -p /data/web_static/
