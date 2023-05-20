@@ -27,7 +27,7 @@ class FileStorage:
         if cls is not None:
             if (type(cls) == str):
                 cls = eval(cls)
-            cls_dict = {k: v for k, v in self.__objects.items()\
+            cls_dict = {k: v for k, v in self.__objects.items()
                         if type(v) == cls}
             return cls_dict
         return self.__objects
