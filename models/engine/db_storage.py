@@ -48,7 +48,7 @@ class DBStorage:
         else:
             if type(cls) == str:
                 cls = eval(cls)
-            obj = self.__session.query(cls)
+            objs = self.__session.query(cls)
         return {"{}.{}".format(type(obj).__name__, obj.id): obj for obj in objs}
 
     def new(self, obj):
@@ -71,3 +71,7 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """ Calls the remove() method on session attribute(self.__session) """
+        self.__session.remove()
