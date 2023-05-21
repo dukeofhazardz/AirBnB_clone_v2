@@ -34,18 +34,18 @@ class BaseModel:
     def save(self):
         """ Updates the public instance attribute updated_at
             with the current datetime """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
         """ Returns a dictionary containing all keys/values
             of __dict__ of the instance: """
-        rdict = self.__dict__.copy()
+        rdict = dict(self.__dict__)
+        rdict["__class__"] = self.__class__.__name__
         rdict["created_at"] = self.created_at.isoformat()
         rdict["updated_at"] = self.updated_at.isoformat()
-        rdict["__class__"] = self.__class__.__name__
-        rdict.pop("_sa_instance_state", None)
+        del rdict["_sa_instance_state"]
         return rdict
 
     def delete(self):
@@ -58,5 +58,7 @@ class BaseModel:
 
     def __str__(self):
         """ Returns the description of the BaseModel class"""
+        rdict = dict(self.__dict__)
+        del rdict["_sa_instance_state"]
         return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
+                                     self.id, rdict)
